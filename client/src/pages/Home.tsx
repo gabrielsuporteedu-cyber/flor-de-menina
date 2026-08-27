@@ -1,22 +1,24 @@
-/* Editorial Blush: página editorial assimétrica, delicada e autoral; imagens respiram e a interface conduz com acolhimento. */
+/* Editorial Blush: mídia em primeiro plano, frase centralizada e vitrine com duas peças por linha. */
 import { useState } from "react";
-import { ArrowUpRight, ChevronDown, Instagram, Menu, Play, ShoppingBag, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Instagram, Menu, ShoppingBag, Sparkles, X } from "lucide-react";
 
-const heroImage = "/manus-storage/flor-de-menina-hero_1656e55b.jpg";
-const collectionOne = "/manus-storage/flor-de-menina-collection-1_9460d829.jpg";
-const collectionTwo = "/manus-storage/flor-de-menina-collection-2_fdfd9cdc.jpg";
+const coverVideo = "/manus-storage/flor-de-menina-capa_f639974c.mp4";
+const coverPoster = "/manus-storage/flor-de-menina-hero_1656e55b.jpg";
 const logo = "/manus-storage/flor-de-menina-logo_ccbe2696.png";
 
-const categories = ["Novidades", "Vestidos", "Blusas", "Conjuntos", "Acessórios"];
+const categories = ["Todos", "Vestidos", "Top"];
 const pieces = [
-  { name: "Vestido Aurora", detail: "Seda acetinada · Rosé", price: "R$ 289,90", image: heroImage, tag: "Destaque" },
-  { name: "Blusa Íris", detail: "Linho leve · Natural", price: "R$ 159,90", image: collectionOne, tag: "Novo" },
-  { name: "Saia Amélia", detail: "Viscose fluida · Creme", price: "R$ 219,90", image: collectionTwo, tag: "Essencial" },
+  { name: "Top Nude", detail: "Malha macia · Bege", price: "R$ 89,00", image: "/manus-storage/flor-de-menina-top_fa697ea9.jfif", tag: "Top", category: "Top" },
+  { name: "Vestido Azul Floral", detail: "Estampa floral · Azul e branco", price: "R$ 199,00", image: "/manus-storage/flor-de-menina-vestido-azul_3af2008e.jfif", tag: "Vestido", category: "Vestidos" },
+  { name: "Vestido Color Block", detail: "Cores vibrantes · Midi", price: "R$ 199,00", image: "/manus-storage/flor-de-menina-vestido-colorido_9b68f8e7.jfif", tag: "Vestido", category: "Vestidos" },
+  { name: "Vestido Turquesa", detail: "Tricoline leve · Longo", price: "R$ 199,00", image: "/manus-storage/flor-de-menina-vestido-turquesa_0993ed0f.jfif", tag: "Vestido", category: "Vestidos" },
+  { name: "Vestido Estampado", detail: "Estampa autoral · Longo", price: "R$ 199,00", image: "/manus-storage/flor-de-menina-vestido-estampado_e045f0dd.jfif", tag: "Vestido", category: "Vestidos" },
 ];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState("Novidades");
+  const [activeCategory, setActiveCategory] = useState("Todos");
+  const visiblePieces = activeCategory === "Todos" ? pieces : pieces.filter((piece) => piece.category === activeCategory);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#f7f1eb] text-[#242123]">
@@ -43,28 +45,23 @@ export default function Home() {
         {menuOpen && <div className="border-t border-[#242123]/10 px-5 py-5 md:hidden"><div className="flex flex-col gap-4 text-sm uppercase tracking-[0.17em]"><a href="#colecao" onClick={() => setMenuOpen(false)}>Coleção</a><a href="#essencia" onClick={() => setMenuOpen(false)}>Nossa essência</a><a href="#atendimento" onClick={() => setMenuOpen(false)}>Atendimento</a></div></div>}
       </header>
 
-      <section id="inicio" className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-12 md:px-10 md:pb-24 md:pt-20 lg:px-16">
-        <div className="grid items-end gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
-          <div className="relative z-10 pb-3 lg:pb-14">
-            <p className="eyebrow mb-5"><span className="mr-2 inline-block h-px w-8 bg-[#c98287] align-middle" /> Coleção 01 · 2026</p>
-            <h1 className="font-display max-w-xl text-[4.1rem] leading-[0.88] tracking-[-0.07em] md:text-[6.2rem] lg:text-[7.2rem]">Peças para os dias que <em>merecem</em> mais.</h1>
-            <p className="mt-8 max-w-sm text-[0.96rem] leading-7 text-[#242123]/65">Uma curadoria feita para acompanhar o seu ritmo, celebrar sua presença e florescer junto com você.</p>
-            <a href="#colecao" className="group mt-9 inline-flex items-center gap-3 border-b border-[#242123] pb-2 text-[0.7rem] font-bold uppercase tracking-[0.2em]">Ver a coleção <ArrowUpRight className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" size={16} strokeWidth={1.5} /></a>
-          </div>
-          <div className="relative min-h-[520px] overflow-hidden bg-[#ded2c8] md:min-h-[650px] lg:min-h-[700px]">
-            <img src={heroImage} alt="Modelo usando vestido rosé em uma atmosfera clara e delicada" className="absolute inset-0 h-full w-full object-cover object-center" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#242123]/25 via-transparent to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white md:bottom-10 md:left-10 md:right-10"><p className="max-w-[180px] text-[0.68rem] uppercase leading-5 tracking-[0.18em]">Descubra o gesto de vestir com intenção</p><span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/70 backdrop-blur-sm"><Play size={16} fill="currentColor" strokeWidth={1} /></span></div>
-            <div className="seal absolute right-[-42px] top-[-38px] hidden h-36 w-36 items-center justify-center rounded-full border border-white/75 text-center text-[0.55rem] uppercase tracking-[0.18em] text-white md:flex">feito para<br />florescer<br /><span className="text-base">✦</span></div>
-          </div>
+      <section id="inicio" className="mx-auto max-w-[1440px] px-5 pb-8 pt-6 md:px-10 md:pb-12 md:pt-10 lg:px-16">
+        <div className="relative overflow-hidden bg-[#ded2c8]">
+          <video className="h-[64vh] min-h-[430px] w-full object-cover object-center md:h-[76vh] md:min-h-[580px]" autoPlay muted loop playsInline poster={coverPoster} aria-label="Vídeo editorial da coleção Flor de Menina">
+            <source src={coverVideo} type="video/mp4" />
+            Seu navegador não suporta vídeo incorporado.
+          </video>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#242123]/35 via-transparent to-[#242123]/5" />
+          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white md:bottom-10 md:left-10 md:right-10"><p className="max-w-[190px] text-[0.68rem] uppercase leading-5 tracking-[0.18em]">Descubra o gesto de vestir com intenção</p><span className="text-[0.62rem] font-bold uppercase tracking-[0.15em]">Coleção 01 · 2026</span></div>
         </div>
+        <div className="mx-auto max-w-4xl py-14 text-center md:py-20"><p className="eyebrow mb-5"><span className="mr-2 inline-block h-px w-8 bg-[#c98287] align-middle" /> Flor de Menina <span className="ml-2 inline-block h-px w-8 bg-[#c98287] align-middle" /></p><h1 className="font-display text-[3.5rem] leading-[0.9] tracking-[-0.07em] md:text-[6.2rem]">Peças para os dias que <em>merecem mais.</em></h1><p className="mx-auto mt-7 max-w-md text-[0.96rem] leading-7 text-[#242123]/65">Uma curadoria feita para acompanhar o seu ritmo, celebrar sua presença e florescer junto com você.</p><a href="#colecao" className="group mt-8 inline-flex items-center gap-3 border-b border-[#242123] pb-2 text-[0.7rem] font-bold uppercase tracking-[0.2em]">Ver a coleção <ArrowUpRight className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" size={16} strokeWidth={1.5} /></a></div>
       </section>
 
       <section id="colecao" className="border-t border-[#242123]/10 bg-[#efe5dd] px-5 py-16 md:px-10 md:py-24 lg:px-16">
         <div className="mx-auto max-w-[1440px]">
-          <div className="mb-12 flex flex-col justify-between gap-7 md:flex-row md:items-end"><div><p className="eyebrow mb-4">Curadoria Flor de Menina</p><h2 className="font-display text-5xl leading-none tracking-[-0.06em] md:text-7xl">Escolhas que <em>contam</em><br className="hidden md:block" /> uma história.</h2></div><p className="max-w-xs text-sm leading-6 text-[#242123]/60">Texturas, volumes e detalhes para criar combinações que têm a sua assinatura.</p></div>
+          <div className="mb-12 flex flex-col justify-between gap-7 md:flex-row md:items-end"><div><p className="eyebrow mb-4">Peças para você florescer</p><h2 className="font-display text-5xl leading-none tracking-[-0.06em] md:text-7xl">Escolhas que <em>contam</em><br className="hidden md:block" /> uma história.</h2></div><p className="max-w-xs text-sm leading-6 text-[#242123]/60">Modelagens, cores e detalhes para criar combinações que têm a sua assinatura.</p></div>
           <div className="mb-9 flex gap-5 overflow-x-auto border-b border-[#242123]/15 pb-4">{categories.map((category) => <button key={category} onClick={() => setActiveCategory(category)} className={`shrink-0 text-[0.68rem] font-bold uppercase tracking-[0.16em] transition-colors ${activeCategory === category ? "text-[#c98287]" : "text-[#242123]/45 hover:text-[#242123]"}`}>{category}</button>)}</div>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-6 sm:gap-y-10 md:gap-x-8 md:gap-y-12">{pieces.map((piece) => <article key={piece.name} className="group"><div className="relative aspect-[0.82] overflow-hidden bg-[#d8cec6]"><img src={piece.image} alt={piece.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" /><span className="absolute left-4 top-4 bg-[#f7f1eb] px-3 py-1 text-[0.58rem] font-bold uppercase tracking-[0.14em]">{piece.tag}</span><button className="absolute bottom-4 right-4 flex h-11 w-11 translate-y-2 items-center justify-center rounded-full bg-[#f7f1eb] opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100" aria-label={`Adicionar ${piece.name} ao pedido`}><ShoppingBag size={16} strokeWidth={1.5} /></button></div><div className="flex items-start justify-between gap-3 pt-4"><div><h3 className="font-display text-2xl tracking-[-0.03em]">{piece.name}</h3><p className="mt-1 text-xs text-[#242123]/55">{piece.detail}</p></div><p className="pt-1 text-sm font-bold">{piece.price}</p></div></article>)}</div>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:gap-x-6 md:gap-x-8 md:gap-y-12">{visiblePieces.map((piece) => <article key={piece.name} className="group"><div className="relative aspect-[0.78] overflow-hidden bg-[#d8cec6]"><img src={piece.image} alt={piece.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" /><span className="absolute left-2 top-2 bg-[#f7f1eb] px-2 py-1 text-[0.5rem] font-bold uppercase tracking-[0.14em] sm:left-4 sm:top-4 sm:px-3">{piece.tag}</span><button className="absolute bottom-3 right-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-[#f7f1eb] opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:bottom-4 sm:right-4 sm:h-11 sm:w-11" aria-label={`Adicionar ${piece.name} ao pedido`}><ShoppingBag size={15} strokeWidth={1.5} /></button></div><div className="flex items-start justify-between gap-2 pt-3 sm:pt-4"><div><h3 className="font-display text-[1.35rem] leading-none tracking-[-0.03em] sm:text-2xl">{piece.name}</h3><p className="mt-1 text-[0.63rem] leading-4 text-[#242123]/55 sm:text-xs">{piece.detail}</p></div><p className="whitespace-nowrap pt-1 text-[0.68rem] font-bold sm:text-sm">{piece.price}</p></div></article>)}</div>
         </div>
       </section>
 
