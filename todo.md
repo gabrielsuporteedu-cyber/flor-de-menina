@@ -31,3 +31,10 @@
 - [x] Criar degradê inferior do vídeo para o fundo creme do site.
 - [x] Validar a composição em desktop e celular.
 - [ ] Criar checkpoint atualizado para entrega.
+
+## Ajuste de tipografia sobre o vídeo
+
+- [x] Aplicar rosa nude muito claro na headline sobre o vídeo.
+- [x] Aplicar sombra preta leve e suave nas letras.
+- [x] Validar visibilidade sem deixar a fonte branca pura.
+- [ ] Criar checkpoint atualizado para entrega.
