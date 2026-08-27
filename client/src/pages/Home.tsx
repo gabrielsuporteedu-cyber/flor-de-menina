@@ -47,14 +47,15 @@ export default function Home() {
 
       <section id="inicio" className="mx-auto max-w-[1440px] px-5 pb-8 pt-6 md:px-10 md:pb-12 md:pt-10 lg:px-16">
         <div className="relative overflow-hidden bg-[#ded2c8]">
-          <video className="h-[64vh] min-h-[430px] w-full object-cover object-center md:h-[76vh] md:min-h-[580px]" autoPlay muted loop playsInline poster={coverPoster} aria-label="Vídeo editorial da coleção Flor de Menina">
+          <video className="h-[70vh] min-h-[500px] w-full object-cover object-center md:h-[82vh] md:min-h-[620px]" autoPlay muted loop playsInline poster={coverPoster} aria-label="Vídeo editorial da coleção Flor de Menina">
             <source src={coverVideo} type="video/mp4" />
             Seu navegador não suporta vídeo incorporado.
           </video>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#242123]/35 via-transparent to-[#242123]/5" />
-          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white md:bottom-10 md:left-10 md:right-10"><p className="max-w-[190px] text-[0.68rem] uppercase leading-5 tracking-[0.18em]">Descubra o gesto de vestir com intenção</p><span className="text-[0.62rem] font-bold uppercase tracking-[0.15em]">Coleção 01 · 2026</span></div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#242123]/10 via-transparent via-[55%] to-[#f7f1eb]" />
+          <div className="absolute inset-x-5 bottom-[13%] text-center text-white md:inset-x-10 md:bottom-[15%]"><p className="mb-4 text-[0.62rem] font-bold uppercase tracking-[0.25em] text-white/85 md:text-[0.68rem]">Flor de Menina · Coleção 01</p><h1 className="mx-auto max-w-4xl font-display text-[3.45rem] leading-[0.9] tracking-[-0.07em] drop-shadow-[0_2px_16px_rgba(0,0,0,.28)] md:text-[6.5rem]">Peças para os dias que <em>merecem mais.</em></h1><p className="mx-auto mt-6 max-w-md text-[0.9rem] leading-6 text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,.3)] md:text-base">Uma curadoria feita para acompanhar o seu ritmo, celebrar sua presença e florescer junto com você.</p><a href="#colecao" className="group mt-7 inline-flex items-center gap-3 border-b border-white/80 pb-2 text-[0.68rem] font-bold uppercase tracking-[0.2em]">Ver a coleção <ArrowUpRight className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" size={16} strokeWidth={1.5} /></a></div>
+          <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between text-white/80 md:bottom-8 md:left-10 md:right-10"><p className="max-w-[190px] text-[0.6rem] uppercase leading-5 tracking-[0.18em]">Descubra o gesto de vestir com intenção</p><span className="text-[0.6rem] font-bold uppercase tracking-[0.15em]">Vídeo editorial</span></div>
         </div>
-        <div className="mx-auto max-w-4xl py-14 text-center md:py-20"><p className="eyebrow mb-5"><span className="mr-2 inline-block h-px w-8 bg-[#c98287] align-middle" /> Flor de Menina <span className="ml-2 inline-block h-px w-8 bg-[#c98287] align-middle" /></p><h1 className="font-display text-[3.5rem] leading-[0.9] tracking-[-0.07em] md:text-[6.2rem]">Peças para os dias que <em>merecem mais.</em></h1><p className="mx-auto mt-7 max-w-md text-[0.96rem] leading-7 text-[#242123]/65">Uma curadoria feita para acompanhar o seu ritmo, celebrar sua presença e florescer junto com você.</p><a href="#colecao" className="group mt-8 inline-flex items-center gap-3 border-b border-[#242123] pb-2 text-[0.7rem] font-bold uppercase tracking-[0.2em]">Ver a coleção <ArrowUpRight className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" size={16} strokeWidth={1.5} /></a></div>
+        
       </section>
 
       <section id="colecao" className="border-t border-[#242123]/10 bg-[#efe5dd] px-5 py-16 md:px-10 md:py-24 lg:px-16">

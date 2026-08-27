@@ -23,3 +23,11 @@
 - [x] Aplicar R$ 199,00 aos vestidos e R$ 89,00 ao top.
 - [x] Validar carregamento, responsividade e compilação.
 - [ ] Criar checkpoint atualizado para entrega.
+
+## Ajuste do hero — headline sobre vídeo e degradê
+
+- [x] Mover a headline para uma camada sobre o vídeo.
+- [x] Garantir contraste da headline com uma sobreposição suave.
+- [x] Criar degradê inferior do vídeo para o fundo creme do site.
+- [x] Validar a composição em desktop e celular.
+- [ ] Criar checkpoint atualizado para entrega.
