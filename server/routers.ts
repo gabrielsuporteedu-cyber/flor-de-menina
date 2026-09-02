@@ -6,6 +6,7 @@ import { getDb } from "./db";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
+import { storagePut } from "./storage";
 
 async function getOrCreateStoreId(ownerId: number) {
   const db = await getDb();
@@ -39,6 +40,21 @@ export const appRouter = router({
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
       return { success: true } as const;
     }),
+  }),
+  catalog: publicProcedure.query(async () => {
+    const db = await getDb();
+    if (!db) return [];
+    const store = await db.select({ id: stores.id }).from(stores).limit(1);
+    if (!store[0]) return [];
+    const rows = await db.select().from(products).where(eq(products.storeId, store[0].id)).orderBy(desc(products.createdAt));
+    const images = await db.select().from(productImages);
+    return rows.map((product) => ({ ...product, image: images.find((image) => image.productId === product.id && image.isPrimary === 1)?.url ?? images.find((image) => image.productId === product.id)?.url ?? null }));
+  }),
+  storeInfo: publicProcedure.query(async () => {
+    const db = await getDb();
+    if (!db) return null;
+    const rows = await db.select({ name: stores.name, whatsapp: stores.whatsapp, defaultMessage: stores.defaultMessage, instagram: stores.instagram }).from(stores).limit(1);
+    return rows[0] ?? null;
   }),
   admin: router({
     store: router({
@@ -81,6 +97,63 @@ export const appRouter = router({
         const storeId = await getOrCreateStoreId(ctx.user.id);
         await db.update(products).set({ ...values, compareAtPrice: values.compareAtPrice || null, updatedAt: new Date() }).where(and(eq(products.id, id), eq(products.storeId, storeId)));
         return { success: true };
+      }),
+      uploadImage: adminProcedure.input(z.object({ productId: z.number().int().positive(), fileName: z.string().max(180), mimeType: z.string().regex(/^image\/(jpeg|png|webp)$/), data: z.string().regex(/^data:image\/(jpeg|png|webp);base64,/) })).mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Banco de dados indisponível");
+        const storeId = await getOrCreateStoreId(ctx.user.id);
+        const product = await db.select({ id: products.id }).from(products).where(and(eq(products.id, input.productId), eq(products.storeId, storeId))).limit(1);
+        if (!product[0]) throw new Error("Produto não encontrado");
+        const buffer = Buffer.from(input.data.split(",")[1] ?? "", "base64");
+        const stored = await storagePut(`products/${ctx.user.id}/${Date.now()}-${input.fileName}`, buffer, input.mimeType);
+        const existing = await db.select({ id: productImages.id }).from(productImages).where(eq(productImages.productId, input.productId));
+        await db.insert(productImages).values({ productId: input.productId, url: stored.url, storageKey: stored.key, sortOrder: existing.length, isPrimary: existing.length === 0 ? 1 : 0 });
+        return { url: stored.url, key: stored.key };
+      }),
+      images: router({
+        list: adminProcedure.input(z.object({ productId: z.number().int().positive() })).query(async ({ ctx, input }) => {
+          const db = await getDb();
+          if (!db) return [];
+          const storeId = await getOrCreateStoreId(ctx.user.id);
+          const owned = await db.select({ id: products.id }).from(products).where(and(eq(products.id, input.productId), eq(products.storeId, storeId))).limit(1);
+          if (!owned[0]) return [];
+          return db.select().from(productImages).where(eq(productImages.productId, input.productId)).orderBy(productImages.sortOrder);
+        }),
+        setPrimary: adminProcedure.input(z.object({ id: z.number().int().positive(), productId: z.number().int().positive() })).mutation(async ({ ctx, input }) => {
+          const db = await getDb();
+          if (!db) throw new Error("Banco de dados indisponível");
+          const storeId = await getOrCreateStoreId(ctx.user.id);
+          const owned = await db.select({ id: products.id }).from(products).where(and(eq(products.id, input.productId), eq(products.storeId, storeId))).limit(1);
+          if (!owned[0]) throw new Error("Produto não encontrado");
+          await db.update(productImages).set({ isPrimary: 0 }).where(eq(productImages.productId, input.productId));
+          await db.update(productImages).set({ isPrimary: 1 }).where(and(eq(productImages.id, input.id), eq(productImages.productId, input.productId)));
+          return { success: true };
+        }),
+        reorder: adminProcedure.input(z.object({ id: z.number().int().positive(), productId: z.number().int().positive(), direction: z.enum(["up", "down"]) })).mutation(async ({ ctx, input }) => {
+          const db = await getDb();
+          if (!db) throw new Error("Banco de dados indisponível");
+          const storeId = await getOrCreateStoreId(ctx.user.id);
+          const owned = await db.select({ id: products.id }).from(products).where(and(eq(products.id, input.productId), eq(products.storeId, storeId))).limit(1);
+          if (!owned[0]) throw new Error("Produto não encontrado");
+          const currentRows = await db.select().from(productImages).where(eq(productImages.productId, input.productId)).orderBy(productImages.sortOrder);
+          const index = currentRows.findIndex((image) => image.id === input.id);
+          const nextIndex = input.direction === "up" ? index - 1 : index + 1;
+          if (index < 0 || !currentRows[nextIndex]) return { success: true };
+          const current = currentRows[index];
+          const next = currentRows[nextIndex];
+          await db.update(productImages).set({ sortOrder: next.sortOrder }).where(eq(productImages.id, current.id));
+          await db.update(productImages).set({ sortOrder: current.sortOrder }).where(eq(productImages.id, next.id));
+          return { success: true };
+        }),
+        remove: adminProcedure.input(z.object({ id: z.number().int().positive(), productId: z.number().int().positive() })).mutation(async ({ ctx, input }) => {
+          const db = await getDb();
+          if (!db) throw new Error("Banco de dados indisponível");
+          const storeId = await getOrCreateStoreId(ctx.user.id);
+          const owned = await db.select({ id: products.id }).from(products).where(and(eq(products.id, input.productId), eq(products.storeId, storeId))).limit(1);
+          if (!owned[0]) throw new Error("Produto não encontrado");
+          await db.delete(productImages).where(and(eq(productImages.id, input.id), eq(productImages.productId, input.productId)));
+          return { success: true };
+        }),
       }),
       remove: adminProcedure.input(z.object({ id: z.number().int().positive() })).mutation(async ({ ctx, input }) => {
         const db = await getDb();
