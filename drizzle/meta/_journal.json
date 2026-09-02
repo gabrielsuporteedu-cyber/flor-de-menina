@@ -8,6 +8,13 @@
       "when": 1788363072457,
       "tag": "0000_white_reptil",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1788364958670,
+      "tag": "0001_fast_silverclaw",
+      "breakpoints": true
     }
   ]
 }

@@ -53,7 +53,7 @@ export const appRouter = router({
   storeInfo: publicProcedure.query(async () => {
     const db = await getDb();
     if (!db) return null;
-    const rows = await db.select({ name: stores.name, whatsapp: stores.whatsapp, defaultMessage: stores.defaultMessage, instagram: stores.instagram }).from(stores).limit(1);
+    const rows = await db.select({ name: stores.name, logoUrl: stores.logoUrl, heroMediaUrl: stores.heroMediaUrl, heroMediaType: stores.heroMediaType, heroHeadline: stores.heroHeadline, whatsapp: stores.whatsapp, defaultMessage: stores.defaultMessage, instagram: stores.instagram }).from(stores).limit(1);
     return rows[0] ?? null;
   }),
   admin: router({
@@ -64,7 +64,15 @@ export const appRouter = router({
         const rows = await db.select().from(stores).where(eq(stores.ownerId, ctx.user.id)).limit(1);
         return rows[0] ?? null;
       }),
-      save: adminProcedure.input(z.object({ name: z.string().min(1).max(160), whatsapp: z.string().max(32).optional(), defaultMessage: z.string().optional(), instagram: z.string().max(160).optional() })).mutation(async ({ ctx, input }) => {
+      uploadBrandAsset: adminProcedure.input(z.object({ kind: z.enum(["logo", "hero"]), fileName: z.string().max(180), mimeType: z.string(), data: z.string().regex(/^data:(image\/(jpeg|png|webp)|video\/mp4);base64,/) })).mutation(async ({ ctx, input }) => {
+        const db = await getDb();
+        if (!db) throw new Error("Banco de dados indisponível");
+        const storeId = await getOrCreateStoreId(ctx.user.id);
+        const stored = await storagePut(`store/${ctx.user.id}/${Date.now()}-${input.fileName}`, Buffer.from(input.data.split(",")[1] ?? "", "base64"), input.mimeType);
+        await db.update(stores).set(input.kind === "logo" ? { logoUrl: stored.url } : { heroMediaUrl: stored.url, heroMediaType: "video" }).where(eq(stores.id, storeId));
+        return stored;
+      }),
+      save: adminProcedure.input(z.object({ name: z.string().min(1).max(160), whatsapp: z.string().max(32).optional(), defaultMessage: z.string().optional(), instagram: z.string().max(160).optional(), heroHeadline: z.string().min(5).max(240) })).mutation(async ({ ctx, input }) => {
         const db = await getDb();
         if (!db) throw new Error("Banco de dados indisponível");
         const existing = await db.select().from(stores).where(eq(stores.ownerId, ctx.user.id)).limit(1);

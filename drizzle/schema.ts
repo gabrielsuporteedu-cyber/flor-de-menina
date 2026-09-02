@@ -22,6 +22,7 @@ export const stores = mysqlTable("stores", {
   instagram: varchar("instagram", { length: 160 }),
   heroMediaUrl: text("heroMediaUrl"),
   heroMediaType: mysqlEnum("heroMediaType", ["image", "video"]).default("image").notNull(),
+  heroHeadline: varchar("heroHeadline", { length: 240 }).notNull().default("Peças para os dias que merecem mais."),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

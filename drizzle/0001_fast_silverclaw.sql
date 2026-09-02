@@ -1,0 +1,1 @@
+ALTER TABLE `stores` ADD `heroHeadline` varchar(240) DEFAULT 'Peças para os dias que merecem mais.' NOT NULL;

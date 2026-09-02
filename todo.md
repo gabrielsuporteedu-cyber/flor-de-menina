@@ -66,3 +66,13 @@
 - [x] Adicionar testes para bloqueio de usuários não administradores.
 - [x] Adicionar validações de isolamento entre lojas nas rotas protegidas.
 - [x] Validar visualmente os fluxos de cadastro com fotos, catálogo público e pedido em desktop e celular.
+
+## Personalização avançada da vitrine
+
+- [x] Adicionar campo de upload da logo no painel administrativo.
+- [x] Adicionar campo de upload do vídeo da capa no painel administrativo.
+- [x] Adicionar campo para editar a frase de destaque do topo.
+- [x] Salvar as novas configurações no banco e no armazenamento.
+- [x] Usar logo, vídeo e frase configurados na vitrine pública.
+- [x] Adicionar botão flutuante do WhatsApp com o número salvo no painel.
+- [x] Validar os fluxos em desktop e celular e criar checkpoint.
