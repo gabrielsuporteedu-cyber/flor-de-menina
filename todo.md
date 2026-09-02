@@ -38,3 +38,22 @@
 - [x] Aplicar sombra preta leve e suave nas letras.
 - [x] Validar visibilidade sem deixar a fonte branca pura.
 - [ ] Criar checkpoint atualizado para entrega.
+
+## Painel administrativo e catálogo gerenciável
+
+- [x] Migrar o projeto estático para full-stack com autenticação, banco e armazenamento.
+- [x] Criar login seguro para a lojista.
+- [x] Criar gestão de produtos com nome, categoria, descrição, tamanhos, cores, preço e status.
+- [x] Adicionar suporte a preço “de” e “por” para promoção e liquidação.
+- [ ] Permitir múltiplas fotos por produto, foto principal e ordenação.
+- [x] Criar configurações da loja: nome, WhatsApp, mensagem padrão e Instagram (logo/upload de mídia pendente).
+- [ ] Conectar o catálogo público aos dados administrados.
+- [ ] Implementar lista de pedido e montagem da mensagem para WhatsApp.
+- [ ] Validar isolamento de dados, permissões, responsividade e fluxos principais.
+
+## Correções de consistência do painel
+
+- [x] Corrigir o vínculo dos produtos para usar o `stores.id` real da loja.
+- [x] Hidratar o formulário de configurações com dados salvos e tratar estados de carregamento/erro.
+- [x] Exibir preços “DE/POR” com destaque para promoções e liquidações.
+- [x] Criar estados de loading e erro para consultas, além de estados pending nas mutações.
