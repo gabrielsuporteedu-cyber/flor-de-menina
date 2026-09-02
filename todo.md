@@ -92,3 +92,11 @@
 - [x] Validar visualmente em celular o carrinho aberto com itens selecionados.
 - [x] Validar remoção individual e estado vazio do carrinho.
 - [x] Salvar novo checkpoint após a validação final.
+
+## Total do carrinho e acesso ao painel
+
+- [x] Calcular automaticamente o valor total dos produtos selecionados.
+- [x] Atualizar o total ao adicionar ou remover itens.
+- [x] Exibir o total em destaque no carrinho.
+- [x] Tornar o acesso ao painel administrativo encontrável na vitrine.
+- [x] Validar total, remoção, responsividade e criar checkpoint.
