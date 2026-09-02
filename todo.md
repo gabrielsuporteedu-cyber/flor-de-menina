@@ -76,3 +76,19 @@
 - [x] Usar logo, vídeo e frase configurados na vitrine pública.
 - [x] Adicionar botão flutuante do WhatsApp com o número salvo no painel.
 - [x] Validar os fluxos em desktop e celular e criar checkpoint.
+
+## Carrinho gerenciável pelo cliente
+
+- [x] Tornar o carrinho abrível pelo botão “Meu pedido”.
+- [x] Listar no carrinho os produtos selecionados pelo cliente.
+- [x] Permitir excluir cada produto individualmente.
+- [x] Exibir estado vazio e contador atualizado do carrinho.
+- [x] Manter a continuidade para o atendimento via WhatsApp.
+- [x] Validar o fluxo em desktop e celular e criar checkpoint.
+
+## Validação explícita do carrinho
+
+- [x] Validar visualmente em desktop o carrinho aberto com itens selecionados.
+- [x] Validar visualmente em celular o carrinho aberto com itens selecionados.
+- [x] Validar remoção individual e estado vazio do carrinho.
+- [x] Salvar novo checkpoint após a validação final.
