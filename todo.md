@@ -113,7 +113,7 @@
 
 ## Exportação para GitHub e Vercel
 
-- [ ] Verificar a integração do GitHub disponível para a sessão.
-- [ ] Confirmar proprietário e nome do repositório de destino.
-- [ ] Exportar o checkpoint atual para o GitHub.
-- [ ] Verificar o repositório exportado e orientar a importação na Vercel.
+- [x] Verificar a integração do GitHub disponível para a sessão.
+- [x] Confirmar proprietário e nome do repositório de destino.
+- [x] Exportar o checkpoint atual para o GitHub.
+- [x] Verificar o repositório exportado e orientar a importação na Vercel.
