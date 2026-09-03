@@ -137,3 +137,12 @@
 - [x] Verificar a URL e a saída atual da Vercel.
 - [x] Comparar configuração da raiz, build e saída publicada.
 - [x] Definir a correção exata e validar o novo deploy.
+
+## Verificação abrangente solicitada
+
+- [ ] Confirmar que o vídeo da capa está acessível na implantação da Vercel e mantém poster, autoplay silencioso, loop e fallback.
+- [ ] Validar navegação, filtros, chamadas para ação, botão flutuante do WhatsApp e acesso à área da loja.
+- [ ] Validar inclusão, abertura, remoção, contador e totalizador do carrinho, além da montagem do pedido para WhatsApp.
+- [ ] Conferir headline, textos solicitados, preços dos vestidos e do top e grade de duas colunas em desktop e celular.
+- [ ] Executar checagem de tipos, testes automatizados e build após a verificação.
+- [ ] Corrigir a visibilidade do botão de adicionar ao pedido no celular, onde não existe hover.
