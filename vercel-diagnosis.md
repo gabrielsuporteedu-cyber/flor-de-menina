@@ -43,3 +43,7 @@ A página completa foi conferida em 375×812 e 1280×720. A coleção mantém du
 ## Inspeção interativa do preview
 
 Com `Top Nude` e `Vestido Azul Floral` selecionados, o preview exibiu ambos no carrinho, os botões de remoção, o contador 2, o botão de continuidade e o total calculado de R$ 288,00. A inspeção do DOM confirmou que o vídeo usa `/flor-de-menina-capa.mp4`, está em reprodução, silencioso, em loop e com autoplay; também confirmou os botões de filtros, adicionar ao pedido, navegação, atendimento, WhatsApp e área da loja.
+
+## Verificação pública na Vercel
+
+Após o push para `main`, o endereço `https://flordemenina-sand.vercel.app/flor-de-menina-capa.mp4` passou a responder `content-type: video/mp4` com 2.983.201 bytes. Na vitrine pública, o vídeo está em reprodução, silencioso, em loop e com autoplay usando o caminho da Vercel; o carrinho com Top Nude e Vestido Azul Floral mostra R$ 288,00. Headline, preços R$ 89,00 e R$ 199,00, filtros, remoção, navegação, atendimento, WhatsApp e área da loja foram confirmados.

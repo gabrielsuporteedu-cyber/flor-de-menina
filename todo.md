@@ -140,9 +140,15 @@
 
 ## Verificação abrangente solicitada
 
-- [ ] Confirmar que o vídeo da capa está acessível na implantação da Vercel e mantém poster, autoplay silencioso, loop e fallback.
-- [ ] Validar navegação, filtros, chamadas para ação, botão flutuante do WhatsApp e acesso à área da loja.
-- [ ] Validar inclusão, abertura, remoção, contador e totalizador do carrinho, além da montagem do pedido para WhatsApp.
-- [ ] Conferir headline, textos solicitados, preços dos vestidos e do top e grade de duas colunas em desktop e celular.
-- [ ] Executar checagem de tipos, testes automatizados e build após a verificação.
-- [ ] Corrigir a visibilidade do botão de adicionar ao pedido no celular, onde não existe hover.
+- [x] Confirmar que o vídeo da capa está acessível na implantação da Vercel e mantém poster, autoplay silencioso, loop e fallback.
+- [x] Validar navegação, filtros, chamadas para ação, botão flutuante do WhatsApp e acesso à área da loja.
+- [x] Validar inclusão, abertura, remoção, contador e totalizador do carrinho, além da montagem do pedido para WhatsApp.
+- [x] Conferir headline, textos solicitados, preços dos vestidos e do top e grade de duas colunas em desktop e celular.
+- [x] Executar checagem de tipos, testes automatizados e build após a verificação.
+- [x] Corrigir a visibilidade do botão de adicionar ao pedido no celular, onde não existe hover.
+
+## Pendências encontradas na validação pública
+
+- [ ] Empacotar poster, logo e imagens fallback usados pela vitrine para que os assets visuais também funcionem fora do ambiente Manus.
+- [ ] Garantir uma configuração pública de WhatsApp disponível no deploy da Vercel sem inventar número ou mensagem.
+- [ ] Revalidar os links de pedido na URL pública para confirmar que geram `wa.me` com a mensagem montada.

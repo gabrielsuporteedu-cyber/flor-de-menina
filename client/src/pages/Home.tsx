@@ -4,16 +4,16 @@ import { trpc } from "@/lib/trpc";
 import { ArrowUpRight, ChevronDown, Instagram, Menu, ShoppingBag, Sparkles, X } from "lucide-react";
 
 const coverVideo = "/flor-de-menina-capa.mp4";
-const coverPoster = "/manus-storage/flor-de-menina-hero_1656e55b.jpg";
-const logo = "/manus-storage/flor-de-menina-logo_ccbe2696.png";
+const coverPoster = "/flor-de-menina-hero.jpg";
+const logo = "/flor-de-menina-logo.png";
 
 const categories = ["Todos", "Vestidos", "Top"];
 const pieces = [
-  { name: "Top Nude", detail: "Malha macia · Bege", price: "R$ 89,00", value: 89, image: "/manus-storage/flor-de-menina-top_fa697ea9.jfif", tag: "Top", category: "Top" },
-  { name: "Vestido Azul Floral", detail: "Estampa floral · Azul e branco", price: "R$ 199,00", value: 199, image: "/manus-storage/flor-de-menina-vestido-azul_3af2008e.jfif", tag: "Vestido", category: "Vestidos" },
-  { name: "Vestido Color Block", detail: "Cores vibrantes · Midi", price: "R$ 199,00", value: 199, image: "/manus-storage/flor-de-menina-vestido-colorido_9b68f8e7.jfif", tag: "Vestido", category: "Vestidos" },
-  { name: "Vestido Turquesa", detail: "Tricoline leve · Longo", price: "R$ 199,00", value: 199, image: "/manus-storage/flor-de-menina-vestido-turquesa_0993ed0f.jfif", tag: "Vestido", category: "Vestidos" },
-  { name: "Vestido Estampado", detail: "Estampa autoral · Longo", price: "R$ 199,00", value: 199, image: "/manus-storage/flor-de-menina-vestido-estampado_e045f0dd.jfif", tag: "Vestido", category: "Vestidos" },
+  { name: "Top Nude", detail: "Malha macia · Bege", price: "R$ 89,00", value: 89, image: "/flor-de-menina-top.jfif", tag: "Top", category: "Top" },
+  { name: "Vestido Azul Floral", detail: "Estampa floral · Azul e branco", price: "R$ 199,00", value: 199, image: "/flor-de-menina-vestido-azul.jfif", tag: "Vestido", category: "Vestidos" },
+  { name: "Vestido Color Block", detail: "Cores vibrantes · Midi", price: "R$ 199,00", value: 199, image: "/flor-de-menina-vestido-colorido.jfif", tag: "Vestido", category: "Vestidos" },
+  { name: "Vestido Turquesa", detail: "Tricoline leve · Longo", price: "R$ 199,00", value: 199, image: "/flor-de-menina-vestido-turquesa.jfif", tag: "Vestido", category: "Vestidos" },
+  { name: "Vestido Estampado", detail: "Estampa autoral · Longo", price: "R$ 199,00", value: 199, image: "/flor-de-menina-vestido-estampado.jfif", tag: "Vestido", category: "Vestidos" },
 ];
 
 export default function Home() {
