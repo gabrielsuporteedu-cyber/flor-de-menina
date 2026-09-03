@@ -110,3 +110,10 @@
 - [x] Revisar scripts, variáveis, banco e compatibilidade com GitHub/Vercel.
 - [x] Documentar o caminho de publicação e limitações do backend na Vercel.
 - [x] Criar testes automatizados e checkpoint após validação.
+
+## Exportação para GitHub e Vercel
+
+- [ ] Verificar a integração do GitHub disponível para a sessão.
+- [ ] Confirmar proprietário e nome do repositório de destino.
+- [ ] Exportar o checkpoint atual para o GitHub.
+- [ ] Verificar o repositório exportado e orientar a importação na Vercel.
