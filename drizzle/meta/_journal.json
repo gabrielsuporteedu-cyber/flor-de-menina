@@ -15,6 +15,13 @@
       "when": 1788364958670,
       "tag": "0001_fast_silverclaw",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1788437798434,
+      "tag": "0002_white_sleeper",
+      "breakpoints": true
     }
   ]
 }

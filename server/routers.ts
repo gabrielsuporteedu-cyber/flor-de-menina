@@ -2,7 +2,9 @@ import { COOKIE_NAME } from "@shared/const";
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { productImages, products, stores } from "../drizzle/schema";
-import { getDb } from "./db";
+import { getDb, getUserByEmail, setUserPasswordHash } from "./db";
+import { hashPassword, validatePassword, verifyPassword } from "./passwordAuth";
+import { sdk } from "./_core/sdk";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc";
@@ -34,10 +36,31 @@ export const productInput = z.object({
 export const appRouter = router({
   system: systemRouter,
   auth: router({
-    me: publicProcedure.query(opts => opts.ctx.user),
+    me: publicProcedure.query(opts => { if (!opts.ctx.user) return null; const { passwordHash: _passwordHash, ...safeUser } = opts.ctx.user; return safeUser; }),
+    hasPassword: adminProcedure.query(({ ctx }) => Boolean(ctx.user.passwordHash)),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      return { success: true } as const;
+    }),
+    login: publicProcedure.input(z.object({ email: z.string().email(), password: z.string().min(1) })).mutation(async ({ ctx, input }) => {
+      const user = await getUserByEmail(input.email);
+      if (!user || user.role !== "admin" || !verifyPassword(input.password, user.passwordHash)) {
+        throw new Error("E-mail ou senha inválidos.");
+      }
+      const token = await sdk.createLocalSessionToken(user.id, user.name || "Admin");
+      ctx.res.cookie(COOKIE_NAME, token, { ...getSessionCookieOptions(ctx.req), maxAge: 1000 * 60 * 60 * 24 * 30 });
+      return { success: true } as const;
+    }),
+    setPassword: adminProcedure.input(z.object({ newPassword: z.string().min(8).max(128) })).mutation(async ({ ctx, input }) => {
+      if (!validatePassword(input.newPassword)) throw new Error("A senha deve ter entre 8 e 128 caracteres.");
+      await setUserPasswordHash(ctx.user.id, hashPassword(input.newPassword));
+      return { success: true } as const;
+    }),
+    changePassword: adminProcedure.input(z.object({ currentPassword: z.string().min(1), newPassword: z.string().min(8).max(128) })).mutation(async ({ ctx, input }) => {
+      if (!verifyPassword(input.currentPassword, ctx.user.passwordHash)) throw new Error("A senha atual está incorreta.");
+      if (!validatePassword(input.newPassword)) throw new Error("A nova senha deve ter entre 8 e 128 caracteres.");
+      await setUserPasswordHash(ctx.user.id, hashPassword(input.newPassword));
       return { success: true } as const;
     }),
   }),

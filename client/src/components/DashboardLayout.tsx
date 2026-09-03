@@ -20,6 +20,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { startLogin } from "@/const";
+import { trpc } from "@/lib/trpc";
 import { useIsMobile } from "@/hooks/useMobile";
 import { LayoutDashboard, LogOut, PanelLeft, Store, Settings2 } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
@@ -58,27 +59,7 @@ export default function DashboardLayout({
   }
 
   if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
-          <div className="flex flex-col items-center gap-6">
-            <h1 className="text-2xl font-semibold tracking-tight text-center">
-              Sign in to continue
-            </h1>
-            <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Access to this dashboard requires authentication. Continue to launch the login flow.
-            </p>
-          </div>
-          <Button
-            onClick={() => startLogin()}
-            size="lg"
-            className="w-full shadow-lg hover:shadow-xl transition-all"
-          >
-            Sign in
-          </Button>
-        </div>
-      </div>
-    );
+    return <AdminLogin />;
   }
 
   return (
@@ -94,6 +75,22 @@ export default function DashboardLayout({
       </DashboardLayoutContent>
     </SidebarProvider>
   );
+}
+
+function AdminLogin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const utils = trpc.useUtils();
+  const login = trpc.auth.login.useMutation({
+    onSuccess: async () => {
+      setMessage("Login realizado. Carregando o painel…");
+      await utils.auth.me.invalidate();
+    },
+    onError: error => setMessage(error.message || "E-mail ou senha inválidos."),
+  });
+
+  return <div className="flex min-h-screen items-center justify-center bg-[#f7f1eb] px-5 text-[#242123]"><div className="w-full max-w-md rounded-3xl bg-white/75 p-7 shadow-[0_18px_50px_rgba(65,43,38,.08)] md:p-10"><p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-[#c98287]">Flor de Menina · Administração</p><h1 className="mt-3 font-display text-4xl tracking-[-0.05em]">Acesse sua loja.</h1><p className="mt-3 text-sm leading-6 text-[#242123]/60">Entre com o e-mail e a senha próprios do painel administrativo.</p><form onSubmit={event => { event.preventDefault(); setMessage(""); login.mutate({ email, password }); }} className="mt-7 space-y-4"><label className="block"><span className="mb-1.5 block text-xs font-bold uppercase tracking-[0.1em] text-[#242123]/60">E-mail</span><input type="email" required value={email} onChange={event => setEmail(event.target.value)} autoComplete="email" className="w-full rounded-xl border border-[#242123]/12 bg-[#f7f1eb]/60 px-4 py-3 text-sm outline-none focus:border-[#c98287]" placeholder="voce@seudominio.com" /></label><label className="block"><span className="mb-1.5 block text-xs font-bold uppercase tracking-[0.1em] text-[#242123]/60">Senha</span><input type="password" required value={password} onChange={event => setPassword(event.target.value)} autoComplete="current-password" className="w-full rounded-xl border border-[#242123]/12 bg-[#f7f1eb]/60 px-4 py-3 text-sm outline-none focus:border-[#c98287]" placeholder="Mínimo de 8 caracteres" /></label>{message && <p className="rounded-xl bg-[#f0d9d5]/60 px-4 py-3 text-sm text-[#8d555c]">{message}</p>}<button type="submit" disabled={login.isPending} className="w-full rounded-xl bg-[#c98287] px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white disabled:opacity-60">{login.isPending ? "Entrando…" : "Entrar no painel"}</button></form><div className="my-6 flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.12em] text-[#242123]/35"><span className="h-px flex-1 bg-[#242123]/10" />ou<span className="h-px flex-1 bg-[#242123]/10" /></div><button type="button" onClick={() => startLogin()} className="w-full rounded-xl border border-[#242123]/15 px-4 py-3 text-xs font-bold uppercase tracking-[0.12em]">Entrar com Manus para configurar</button><a href="/" className="mt-6 block text-center text-xs text-[#242123]/55 hover:text-[#c98287]">Voltar para a vitrine</a></div></div>;
 }
 
 type DashboardLayoutContentProps = {

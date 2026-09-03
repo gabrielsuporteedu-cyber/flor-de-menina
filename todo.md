@@ -100,3 +100,13 @@
 - [x] Exibir o total em destaque no carrinho.
 - [x] Tornar o acesso ao painel administrativo encontrável na vitrine.
 - [x] Validar total, remoção, responsividade e criar checkpoint.
+
+## Login próprio e publicação externa
+
+- [x] Adicionar autenticação própria por e-mail e senha para o painel administrativo.
+- [x] Criar sessão segura e proteção das rotas administrativas.
+- [x] Adicionar alteração de senha autenticada.
+- [x] Criar tela de login e feedback de erros.
+- [x] Revisar scripts, variáveis, banco e compatibilidade com GitHub/Vercel.
+- [x] Documentar o caminho de publicação e limitações do backend na Vercel.
+- [x] Criar testes automatizados e checkpoint após validação.

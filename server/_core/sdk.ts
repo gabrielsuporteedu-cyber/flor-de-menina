@@ -163,6 +163,14 @@ class SDKServer {
    * @example
    * const sessionToken = await sdk.createSessionToken(userInfo.openId);
    */
+  async createLocalSessionToken(userId: number, name: string) {
+    return this.signSession({
+      openId: `${LOCAL_OPEN_ID_PREFIX}${userId}`,
+      appId: ENV.appId,
+      name: name || "Admin",
+    });
+  }
+
   async createSessionToken(
     openId: string,
     options: { expiresInMs?: number; name?: string } = {}
@@ -276,6 +284,18 @@ class SDKServer {
       throw ForbiddenError("Invalid session cookie");
     }
 
+    if (session.openId.startsWith(LOCAL_OPEN_ID_PREFIX)) {
+      const localUserId = Number(session.openId.slice(LOCAL_OPEN_ID_PREFIX.length));
+      if (!Number.isInteger(localUserId) || localUserId <= 0) {
+        throw ForbiddenError("Invalid local session");
+      }
+      const localUser = await db.getUserById(localUserId);
+      if (!localUser || localUser.role !== "admin") {
+        throw ForbiddenError("Admin account required");
+      }
+      return localUser;
+    }
+
     if (session.openId.startsWith(CRON_OPEN_ID_PREFIX)) {
       const userInfo = await this.getUserInfoWithJwt(sessionToken ?? "");
       const taskUid = userInfo.taskUid ?? null;
@@ -320,6 +340,7 @@ class SDKServer {
   }
 }
 
+const LOCAL_OPEN_ID_PREFIX = "local_";
 const CRON_OPEN_ID_PREFIX = "cron_";
 
 /** Result of `sdk.authenticateRequest`. Cron callbacks set `isCron=true` and `taskUid`; see `/home/ubuntu/skills/webdev-periodic-updates/SKILL.md`. */
