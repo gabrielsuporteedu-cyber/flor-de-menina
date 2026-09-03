@@ -117,3 +117,10 @@
 - [x] Confirmar proprietário e nome do repositório de destino.
 - [x] Exportar o checkpoint atual para o GitHub.
 - [x] Verificar o repositório exportado e orientar a importação na Vercel.
+
+## Correção do deploy na Vercel
+
+- [x] Inspecionar a URL da Vercel e confirmar a saída incorreta.
+- [ ] Corrigir a configuração de build e a saída publicada para renderizar o frontend (aguardando publicação).
+- [ ] Atualizar o repositório GitHub com a correção.
+- [ ] Validar a URL publicada e orientar um novo deploy.
