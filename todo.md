@@ -121,6 +121,19 @@
 ## Correção do deploy na Vercel
 
 - [x] Inspecionar a URL da Vercel e confirmar a saída incorreta.
-- [ ] Corrigir a configuração de build e a saída publicada para renderizar o frontend (aguardando publicação).
-- [ ] Atualizar o repositório GitHub com a correção.
+- [ ] Corrigir a configuração de build e a saída publicada para renderizar o frontend (vercel.json ainda não publicado).
+- [ ] Atualizar o repositório GitHub com a correção (bloqueado pela permissão de escrita da integração).
 - [ ] Validar a URL publicada e orientar um novo deploy.
+
+## Correção urgente do deploy Vercel
+
+- [ ] Publicar o `vercel.json` no repositório GitHub sem depender da tela já salva.
+- [ ] Confirmar que a Vercel executará `pnpm build` e usará `dist/public`.
+- [ ] Validar a nova implantação sem exibir código-fonte.
+
+## Diagnóstico da nova aplicação GitHub na Vercel
+
+- [x] Verificar o repositório/aplicação GitHub atualmente conectado.
+- [x] Verificar a URL e a saída atual da Vercel.
+- [x] Comparar configuração da raiz, build e saída publicada.
+- [ ] Definir a correção exata e validar o novo deploy.
